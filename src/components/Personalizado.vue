@@ -20,7 +20,10 @@
                         Cantidad: <b-form-input type="number" min="1.00" max="15.00"></b-form-input>
                     </b-col>
                     <b-col>
-                        Tamaño: <b-form-select v-model="selected" :options="options" class="mb-3" />
+                        Tamaño:
+                        <b-form-select  class="mb-3">
+                        <option v-for="i in size" :key="i.id" :value="i.Code">{{i.Descripcion}}</option>
+                        </b-form-select>
                     </b-col>
                 </b-row>
 
@@ -29,7 +32,8 @@
                                 :rows="2">
                 </b-form-textarea>
                 <br>
-                <b-table striped bordered hover small :items="items" :fields="fields" class="text-center"></b-table>
+                <b-table striped bordered hover small :items="size"  :fields="fields" class="text-center">
+                </b-table>
                 
                 <v-btn flat icon 
                         color="red accent-2" 
@@ -54,7 +58,7 @@
 
 <script>
 import NavCategory from '@/components/NavCategorias'
-
+import {getSize} from '../services/tamaños'
     export default {
         name:'CustomDesign',
         data(){
@@ -69,7 +73,8 @@ import NavCategory from '@/components/NavCategorias'
                     {value: 'xg', text: 'Más Grande'},
 
                 ],
-                fields: [ 'nombre', 'medidas'],
+                    size:[],
+                fields: [ 'Descripcion', 'Medidas'],
                 items: [
                     { isActive: true, nombre: 'Más Chico', medidas: '3cm largo x 4cm ancho'},
                     { isActive: false, nombre: 'Chico', medidas: '3cm largo x 4cm ancho'},
@@ -82,6 +87,14 @@ import NavCategory from '@/components/NavCategorias'
         components:{
             'navcategories' : NavCategory
         },
+        mounted()
+        {
+        
+        },
+        created()
+        {
+            this.consultaSize();
+        },
         methods:{
            previewImage: function(event) {
                 var input = event.target;
@@ -93,6 +106,19 @@ import NavCategory from '@/components/NavCategorias'
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
+            },
+            consultaSize()
+            {
+                let self = this;
+                getSize().then(res=>{
+                    console.log("test ",res);
+                    self.size = res.Tamaño
+                    console.log("self: ",self.size)
+                })
+                 .catch(error=>{
+                    console.log("error: ",error);
+                })
+                .finally(()=>console.log("consulta finalizada"))
             }
         }
     }

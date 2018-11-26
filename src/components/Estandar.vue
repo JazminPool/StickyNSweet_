@@ -157,18 +157,80 @@
                         </p>                    
                     </b-card><!--Fin card-->
                 </b-col><!--Fin col-->
-
             </b-row><!--Fin categoría 2-->
+            <br>            
+            <b-row class="m-2">
+                <h2>Comida</h2> 
+                <v-btn icon class="m-0" v-b-tooltip.hover title="Ver más">
+                    <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+            </b-row>
+            <b-row>
+                    <b-col v-for="producto in productos" :key="producto.id">
+                    <b-card 
+                            img-alt="Trici"
+                            img-top
+                            tag="article"
+                            style="max-width: 25rem;"
+                            class="mb-2">
+                        <img src="../assets/st6.png"/>
+                        <h1>{{producto.Titulo}}</h1>
+                        <v-btn flat icon 
+                            color="red accent-2" 
+                            v-b-tooltip.hover title="Añadir al carrito!"
+                            class="right mr-0" >
+                            <v-icon>shopping_cart</v-icon> 
+                        </v-btn>
+                        <h3>{{producto.Precio}}</h3>
+                        <p class="card-text">
+                           {{producto.Descripcion}}
+                        </p>                   
+                    </b-card><!--Fin card-->
+                </b-col><!--Fin col-->
+            </b-row>
         </b-container>
     </div>
 </template>
 
 <script>
 import NavCategory from '@/components/NavCategorias'
+import {getProduct} from '../services/productos'
+
     export default {
         name:'StandarDesign',
+        data(){
+            return{
+                productos: []
+            }
+        },
         components:{
             'navcategories' : NavCategory
+        },
+        created()
+        {
+            this.consultarProductos();
+        },
+        methods:{
+            consultarProductos()
+            {
+                let self = this;
+                let num;
+                getProduct().then(res=>{
+                    console.log("test res: ",res);
+                    console.log(res.Productos);
+                    console.log(res.Productos[1])
+                    self.productos = res.Productos
+                    console.log("self: ",self.productos);
+                })
+                .catch(error=>{
+                    console.log("error: ",error);
+                })
+                .finally(()=>console.log("consulta finalizada"))
+            }
+        },
+        mounted()
+        {
+            getProduct
         }
     }
 </script>
