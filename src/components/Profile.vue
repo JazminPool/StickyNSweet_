@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Barra de opciones: Datos, historial -->
-        <navp></navp>
+        <navp :userData="userData"></navp>
         <br><br>
         <!-- Content -->
         <b-container fluid>
@@ -24,26 +24,26 @@
                 <b-col md="8">
                     <b-row class="p-2">
                         <b-col sm="6">
-                            Nombre(s): <b-form-input id="" type="text" placeholder="Nombre(s)" readonly></b-form-input>
+                            Nombre(s): <b-form-input name="Nombre" type="text" placeholder="Nombre(s)" readonly></b-form-input>
                         </b-col>
                         <b-col sm="6">
-                            Apellidos: <b-form-input id="" type="text" placeholder="Apellidos" readonly></b-form-input>
-                        </b-col>
-                    </b-row>
-                    <b-row class="p-2">
-                        <b-col sm="6">
-                            Correo electrónico: <b-form-input id="" type="email" placeholder="Correo" readonly></b-form-input>
-                        </b-col>
-                        <b-col sm="6">
-                            Contraseña: <b-form-input id="" type="password" placeholder="Contraseña" readonly></b-form-input>
+                            Apellidos: <b-form-input name="Apellidos" type="text" placeholder="Apellidos" readonly></b-form-input>
                         </b-col>
                     </b-row>
                     <b-row class="p-2">
                         <b-col sm="6">
-                            Edad: <b-form-input id="" type="number" placeholder="Edad" readonly></b-form-input>
+                            Correo electrónico: <b-form-input name="Correo" type="email" placeholder="Correo" readonly></b-form-input>
                         </b-col>
                         <b-col sm="6">
-                            Género: <b-form-input id="" type="text" placeholder="Género" readonly></b-form-input>
+                            Contraseña: <b-form-input name="Pass" type="password" placeholder="Contraseña" readonly></b-form-input>
+                        </b-col>
+                    </b-row>
+                    <b-row class="p-2">
+                        <b-col sm="6">
+                            Edad: <b-form-input name="fechaNacimiento" type="number" placeholder="Edad" readonly></b-form-input>
+                        </b-col>
+                        <b-col sm="6">
+                            Género: <b-form-input name="Sexo" type="text" placeholder="Género" readonly></b-form-input>
                         </b-col>
                     </b-row>
                     <b-row class="p-2" align-v="center">
@@ -90,7 +90,16 @@ export default {
         { text: 'Starbucks Av. Bonampak', value: null },
         'Plaza las Ámericas', 'La Gran Plaza', 'Av. Andrés Q. Roo', 'Calle 151'
       ],
-      show: true
+      show: true,
+      userData:{
+            Nombre:"",
+            Apellidos:"",
+            Direccion:"",
+            Sexo:"",
+            Edad:"",
+            Correo:"",
+            Pass:""
+      }
     }
   }
 }

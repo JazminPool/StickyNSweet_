@@ -5,7 +5,12 @@ import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import Vuetify from 'vuetify'
- 
+import Snotify from 'vue-snotify'
+import 'vue-snotify/styles/material.css'
+
+
+
+Vue.use(Snotify)
 Vue.use(Vuetify)
 Vue.use(BootstrapVue);
 

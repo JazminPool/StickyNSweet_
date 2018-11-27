@@ -180,12 +180,12 @@
                         label="Nombre(s):"
                         required>
                     </v-text-field> -->
-                    <b-form-input placeholder="Nombre(s)"></b-form-input>
+                    <b-form-input placeholder="Nombre(s)" name="Nombre" v-model="userData.Nombre" id="Nombre"></b-form-input>
                   </b-col>
                   <b-col>
-                    <b-form-input placeholder="Apellidos"></b-form-input>
+                    <b-form-input placeholder="Apellidos" name="Apellidos" v-model="userData.Apellidos" id="Apellidos"></b-form-input>
                   </b-col>
-                </b-row>
+                </b-row> 
                 
                 <b-row align-h="center" align-v="center" class="m-1">
                   <b-col>
@@ -197,7 +197,7 @@
                         persistent-hint
                         required>
                     </v-text-field> -->
-                    <b-form-input placeholder="Correo electrónico" type="email"></b-form-input>
+                    <b-form-input placeholder="Correo electrónico" name="Correo" v-model="userData.Correo" id="Correo" type="email" required></b-form-input>
                   </b-col>
                 </b-row>
 
@@ -213,7 +213,7 @@
                         label="Contraseña:"
                         required>
                     </v-text-field> -->
-                    <b-form-input placeholder="Contraseña" type="password"></b-form-input>
+                    <b-form-input placeholder="Contraseña" name="Pass" v-model="userData.Pass" id="Pass" type="password"></b-form-input>
                   </b-col>
                   <b-col>
                     <!-- <v-text-field
@@ -225,7 +225,7 @@
                         label="Confirmar contraseña:"
                         required>
                     </v-text-field> -->
-                    <b-form-input placeholder="Contraseña" type="password"></b-form-input>
+                    <b-form-input placeholder="Contraseña" name="Pass2" id="Pass2" type="password"></b-form-input>
                   </b-col>
                 </b-row>
 
@@ -238,11 +238,11 @@
                         label="Edad:"
                         required>
                       </v-text-field> -->
-                      <b-form-input placeholder="Edad" type="number"></b-form-input>
+                      <b-form-input placeholder="Edad" name="fechaNacimiento" v-model="userData.fechaNacimiento" id="fechaNacimiento" type="number"></b-form-input>
                     </b-row>
                     <b-row>
                       Género:                  
-                      <b-form-select v-model="gender" class="mb-3" size="sm">
+                      <b-form-select name="Sexo" id="Sexo" v-model="userData.Sexo" class="mb-3" size="sm">
                         <option value="" disabled>Seleccione un género</option>
                         <option value="m">Mujer</option>
                         <option value="h">Hombre</option>
@@ -250,10 +250,11 @@
                     </b-row>
                   </b-col>
                   <b-col md="6">
-                    <img src="../assets/avm.png" v-if="gender == 'm'">
-                    <img src="../assets/avh.png" v-else-if="gender == 'h'">
-                    <img src="../assets/av1.png" v-else>
-                      
+                    <form id="form_contact" enctype="multipart/form-data">
+                    <img name="file" src="../assets/avm.png" v-if="userData.Sexo == 'm'">
+                    <img name="file" src="../assets/avh.png" v-else-if="userData.Sexo == 'h'">
+                    <img name="file" src="../assets/av1.png" v-else>
+                    </form> 
                   </b-col>
                 </b-row>
                 
@@ -263,12 +264,12 @@
                         size="sm" 
                         class="join" 
                         v-model="tipo"
-                        @click="true"> 
+                        @click="sendUser();"> 
                       Ser miembro
                     </b-button>
                   </b-col>
                 </b-row>
-
+                <vue-snotify></vue-snotify>
               </b-tab>
             </b-tabs>
         </b-modal>
@@ -280,8 +281,13 @@
 </template>
 
 <script>
+
+import {createUser} from "../services/usuarios"
+import {Snotify} from 'vue-snotify'
+
 export default {
     name: 'NavBar',
+    //props:["userData"],
     data(){
       return {
         tipo: null,
@@ -295,7 +301,85 @@ export default {
           required: value => !!value || 'Campo requerido.'
         },
         //sexo
-        gender: ''
+        gender: '',
+        //userData
+        loading:true,
+        userData:{
+            Nombre: '',
+            Apellidos:'',
+            Direccion:'',
+            Sexo:'',
+            Edad:'',
+            Correo:'',
+            Pass:'',
+            file:{}
+      }
+      }
+    },
+    methods:
+    {
+      sendUser()
+      {
+        let self = this;
+        console.log("this: ", this.userData);
+
+      this.$snotify.async(
+        "Registrando nuevo contacto",
+        "Registrando...",
+        () =>
+          new Promise((resolve, reject) => {
+            setTimeout(function() {
+             createUser(self.userData)
+                .then(function(response) {
+                  console.log("data response: ", response);
+                  setTimeout(
+                    () =>
+                      resolve({
+                        title: "Registro correcto",
+                        body: "El Usuario se ha registrado correctamente",
+                        config: {
+                          closeOnClick: true,
+                          titleMaxLength: 30,
+                          timeout: 2000
+                        }
+                      }),
+                    1000
+                  );
+                  setTimeout(()=>
+                    self.clearForm(),
+                    3000)
+                })
+                .catch(function(error) {
+                  setTimeout(
+                    () =>
+                      reject({
+                        title: "Error",
+                        body:
+                          "Error al subir datos. No se puede continuar con el registro",
+                        config: {
+                          closeOnClick: true,
+                          timeout: 2000
+                        }
+                      }),
+                    1000
+                  );
+                })
+                .finally(() => console.log("consulta api finalizada"));
+            }, 1500);
+          })
+      );
+      },
+      clearForm()
+      {
+        console.log('formClean')
+        document.getElementById("Nombre").value="";
+        document.getElementById("Apellidos").value="";
+        document.getElementById("Sexo").value="";
+        document.getElementById("fechaNacimiento").value="";
+        document.getElementById("Correo").value="";
+        document.getElementById("Pass").value="";
+              this.dialogvisible = false
+
       }
     }
 }
