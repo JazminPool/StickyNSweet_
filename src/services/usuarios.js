@@ -23,3 +23,18 @@ return fetch(URL +'usuarios/create',{
 .then(res => res.json())
 .then(json => json)
 }
+export function getUserbyId(id)
+{
+    console.log('funcion getUser');
+    return fetch (URL + 'usuarios/user/'+id,{
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({
+
+        })
+        .then(res => res.json())
+        .then(json => json.Data)
+    })
+}

@@ -168,18 +168,12 @@
                 </b-row>
                 <!-- {{$data}} -->
               </b-tab>
-              
+            <form id="form_user" enctype="multipart/form-data">               
               <b-tab title="Registro">
                 <h4 class="m-3">¡Estás a punto de ser miembro!</h4>
                 
                 <b-row align-h="center" align-v="center" class="m-1">
                   <b-col>
-                    <!-- <v-text-field
-                        type="text"
-                        color="pink darken-4"
-                        label="Nombre(s):"
-                        required>
-                    </v-text-field> -->
                     <b-form-input placeholder="Nombre(s)" name="Nombre" v-model="userData.Nombre" id="Nombre"></b-form-input>
                   </b-col>
                   <b-col>
@@ -189,42 +183,15 @@
                 
                 <b-row align-h="center" align-v="center" class="m-1">
                   <b-col>
-                    <!-- <v-text-field
-                        type="email"
-                        color="pink darken-4"
-                        label="Correo electrónico:"
-                        hint="Con este correo podrás iniciar sesión."
-                        persistent-hint
-                        required>
-                    </v-text-field> -->
                     <b-form-input placeholder="Correo electrónico" name="Correo" v-model="userData.Correo" id="Correo" type="email" required></b-form-input>
                   </b-col>
                 </b-row>
 
                 <b-row align-h="center" align-v="center" class="m-1">
                   <b-col>
-                    <!-- <v-text-field
-                        color="pink darken-4"
-                        v-model="password"
-                        :append-icon="show1 ? 'visibility_off' : 'visibility'"
-                        :rules="[rules.required, rules.min]"
-                        :type="show1 ? 'text' : 'password'"
-                         @click:append="show1 = !show1"
-                        label="Contraseña:"
-                        required>
-                    </v-text-field> -->
                     <b-form-input placeholder="Contraseña" name="Pass" v-model="userData.Pass" id="Pass" type="password"></b-form-input>
                   </b-col>
                   <b-col>
-                    <!-- <v-text-field
-                        color="pink darken-4"
-                        :append-icon="show2 ? 'visibility_off' : 'visibility'"
-                        :rules="[rules.required, rules.min]"
-                        :type="show2 ? 'text' : 'password'"
-                         @click:append="show2 = !show2"
-                        label="Confirmar contraseña:"
-                        required>
-                    </v-text-field> -->
                     <b-form-input placeholder="Contraseña" name="Pass2" id="Pass2" type="password"></b-form-input>
                   </b-col>
                 </b-row>
@@ -232,12 +199,6 @@
                 <b-row align-h="center" align-v="center" class="m-1">
                   <b-col md="3">
                     <b-row>
-                      <!-- <v-text-field
-                        type="number"
-                        color="pink darken-4"
-                        label="Edad:"
-                        required>
-                      </v-text-field> -->
                       <b-form-input placeholder="Edad" name="fechaNacimiento" v-model="userData.fechaNacimiento" id="fechaNacimiento" type="number"></b-form-input>
                     </b-row>
                     <b-row>
@@ -260,10 +221,12 @@
                 
                 <b-row align-h="center" align-v="center" class="m-3">
                   <b-col>
+                   <!-- <router-link to="/profile"></router-link>-->
                     <b-button 
                         size="sm" 
                         class="join" 
                         v-model="tipo"
+                        to="/profile"
                         @click="sendUser();"> 
                       Ser miembro
                     </b-button>
@@ -271,6 +234,7 @@
                 </b-row>
                 <vue-snotify></vue-snotify>
               </b-tab>
+            </form>
             </b-tabs>
         </b-modal>
 
@@ -305,6 +269,7 @@ export default {
         //userData
         loading:true,
         userData:{
+            id:'',
             Nombre: '',
             Apellidos:'',
             Direccion:'',
@@ -369,6 +334,10 @@ export default {
           })
       );
       },
+      getUser(data)
+      {
+
+      },
       clearForm()
       {
         console.log('formClean')
@@ -378,6 +347,7 @@ export default {
         document.getElementById("fechaNacimiento").value="";
         document.getElementById("Correo").value="";
         document.getElementById("Pass").value="";
+        document.getElementById("Pass2").value="";
               this.dialogvisible = false
 
       }

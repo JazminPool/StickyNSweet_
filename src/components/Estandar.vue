@@ -181,6 +181,11 @@
                             class="right mr-0" >
                             <v-icon>shopping_cart</v-icon> 
                         </v-btn>
+                         <router-link to="/Info">
+                            <v-btn flat icon color="red lighten-2" class="right mr-0">
+                                <v-icon> fa-info-circle</v-icon>
+                            </v-btn>
+                        </router-link>
                         <h3>{{producto.Precio}}</h3>
                         <p class="card-text">
                            {{producto.Descripcion}}
