@@ -9,6 +9,7 @@ import InfoSticker from '@/components/info'
 import PurchaseDetails from '@/components/PurchaseDetails'
 import Profile from '@/components/Profile'
 import Purchasing from '@/components/Purchasing'
+import CreditCard from '@/components/CreditCard'
 
 
 Vue.use(Router)
@@ -59,6 +60,11 @@ export default new Router({
       path: '/Purchasing',
       name:'PurchasingHistory',
       component: Purchasing
+    },
+    {//Vista de la tarjeta de credito
+      path: '/Card',
+      name: 'CreditCard',
+      component: CreditCard
     }
     
   ]

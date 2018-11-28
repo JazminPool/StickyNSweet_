@@ -7,9 +7,9 @@ import BootstrapVue from 'bootstrap-vue'
 import Vuetify from 'vuetify'
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/material.css'
+import vuejquery from 'vue-jquery'
 
-
-
+Vue.use(vuejquery)
 Vue.use(Snotify)
 Vue.use(Vuetify)
 Vue.use(BootstrapVue);
@@ -27,6 +27,7 @@ import '@mdi/font/css/materialdesignicons.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 
 
 Vue.config.productionTip = false

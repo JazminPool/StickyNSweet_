@@ -41,7 +41,7 @@
                 <template slot="button-content" right> 
                   <v-avatar class="align-right">
                     <v-badge color="teal lighten-3" left overlap>
-                      <span slot="badge" small>9+</span>
+                      <span slot="badge" small>2</span>
                       <v-btn flat icon color="red lighten-2">
                         <v-icon dark>shopping_cart</v-icon>
                       </v-btn>
